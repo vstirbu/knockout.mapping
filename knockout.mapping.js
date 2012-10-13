@@ -595,6 +595,17 @@
 					options[parentName].arrayChanged(change.event, change.item);
 				});
 			}
+            
+            if (hasKeyCallback) {
+                if (mappedRootObject.newPush === undefined) {
+                    mappedRootObject.newPush = mappedRootObject.push;
+                    mappedRootObject.push = function(data) {
+                        if (mappedRootObject.mappedIndexOf(data) < 0) {
+                            mappedRootObject.newPush(data);
+                        }
+                    };
+                }
+            }
 		}
 
 		return mappedRootObject;
